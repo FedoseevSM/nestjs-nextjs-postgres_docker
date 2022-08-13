@@ -9,10 +9,11 @@ services:
       - POSTGRES_USER=${TYPEORM_USERNAME}
       - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
       - POSTGRES_DB=${TYPEORM_DATABASE}
-    volumes:
-      - /pgdata:/var/lib/postgresql/data
+    # volumes:
+    #   - /pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
+   
   backend:
     container_name: nest-js
     build:
@@ -30,7 +31,9 @@ services:
       - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
       - TYPEORM_DATABASE=${TYPEORM_DATABASE}
       - TYPEORM_PORT=${TYPEORM_PORT}
-      - TYPEORM_HOST=database
+      - TYPEORM_HOST=postgresql
+    env_file:
+      - ../docker/.env
   # frontend:
   #   container_name: next-js
   #   build:
